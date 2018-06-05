@@ -1,0 +1,26 @@
+PODS:
+  - Alamofire (4.7.0)
+  - PromiseKit (6.2.1):
+    - PromiseKit/CorePromise (= 6.2.1)
+    - PromiseKit/Foundation (= 6.2.1)
+    - PromiseKit/UIKit (= 6.2.1)
+  - PromiseKit/CorePromise (6.2.1)
+  - PromiseKit/Foundation (6.2.1):
+    - PromiseKit/CorePromise
+  - PromiseKit/UIKit (6.2.1):
+    - PromiseKit/CorePromise
+  - SWXMLHash (4.6.0)
+
+DEPENDENCIES:
+  - Alamofire
+  - PromiseKit
+  - SWXMLHash
+
+SPEC CHECKSUMS:
+  Alamofire: 907e0a98eb68cdb7f9d1f541a563d6ac5dc77b25
+  PromiseKit: edaca6f0a7ed73b08c287600537d13867a7fabc7
+  SWXMLHash: 3c39a53723202800e9e1a87f14b2fe7ac1da98ec
+
+PODFILE CHECKSUM: 23b572d2b47cb0043744ecf7f9d464622d15090c
+
+COCOAPODS: 1.4.0
