@@ -35,9 +35,7 @@ class PlaceTableViewController: UITableViewController {
     var currentLocation: String?{
         return appDelegate.currentLocation
     }
-    
-    var roundButton = UIButton()
-    
+        
     override func viewDidLoad() {
         super.viewDidLoad()
     }
