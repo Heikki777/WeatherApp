@@ -35,7 +35,7 @@ class PlaceTableViewController: UITableViewController {
     var currentLocation: String?{
         return appDelegate.currentLocation
     }
-        
+    
     override func viewDidLoad() {
         super.viewDidLoad()
     }
@@ -101,7 +101,6 @@ class PlaceTableViewController: UITableViewController {
     
     // Override to support conditional editing of the table view.
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        // The first row (current location) can not be edited.
         return true
     }
     

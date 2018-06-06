@@ -101,7 +101,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
             
             // Show compass icon only for the GPS location
             if self.useGPSLocation{
-                self.compassImageView.isHidden =  false
+                self.compassImageView.isHidden = false
                 self.executeAnimations()
             }
         }
