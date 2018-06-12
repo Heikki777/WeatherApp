@@ -130,7 +130,8 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         sections.removeAll()
         tableDataModel.removeAll()
         let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "EEEE, MMM d, yyyy"
+        dateFormatter.locale = Locale.init(identifier: "fi")
+        dateFormatter.dateFormat = "EE d. MMMM yyyy"
         for point in weatherPoints{
             let date = point.date
             let section = dateFormatter.string(from: date)
