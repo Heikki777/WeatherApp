@@ -100,12 +100,14 @@ extension PlaceSearchTableViewController: UISearchResultsUpdating{
         let search = MKLocalSearch(request: request)
         search.start { (response, error) in
             
+            self.searchResults.removeAll()
             guard let response = response else{
                 return
             }
+            
             let names = response.mapItems.compactMap{ $0.placemark.locality }
             for name in names{
-                if !self.searchResults.contains(name){
+                if !self.searchResults.contains(name) && name.lowercased().contains(searchBarText.lowercased()){
                     self.searchResults.append(name)
                 }
             }
