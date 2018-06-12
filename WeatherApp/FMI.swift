@@ -13,7 +13,7 @@ import Alamofire
 
 struct FMI{
     
-    static let apiKey = YOUR_FMI_API_KEY
+    static let apiKey = "fa4dea19-9d96-461b-94d1-bc5ec33da340"
     
     func loadWeather(forPlace place: String, parameters: [String]) -> Promise<XMLIndexer>{
         return Promise { result in
@@ -24,23 +24,25 @@ struct FMI{
                 return
             }
             
-            Alamofire.request(url, method: .get, parameters: nil)
-            .validate()
-            .responseString(completionHandler: { (response) in
-                guard response.result.isSuccess else {
-                    result.reject(FMIError.UnsuccessfulResponse("Error! Weather data couldn't be loaded"))
-                    return
-                }
-                
-                guard let xmlString = response.result.value else{
-                    result.reject(FMIError.MissingValue("Error! The response is missing value"))
-                    return
-                }
-                
-                // Parse the xml string
-                let xml = SWXMLHash.parse(xmlString)
-                result.fulfill(xml)
-            })
+            DispatchQueue.global(qos: .background).async {
+                Alamofire.request(url, method: .get, parameters: nil)
+                .validate()
+                .responseString(completionHandler: { (response) in
+                    guard response.result.isSuccess else {
+                        result.reject(FMIError.UnsuccessfulResponse("Error! Weather data couldn't be loaded"))
+                        return
+                    }
+                    
+                    guard let xmlString = response.result.value else{
+                        result.reject(FMIError.MissingValue("Error! The response is missing value"))
+                        return
+                    }
+                    
+                    // Parse the xml string
+                    let xml = SWXMLHash.parse(xmlString)
+                    result.fulfill(xml)
+                })
+            }
         }
     }
 

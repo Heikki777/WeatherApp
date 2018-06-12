@@ -33,7 +33,7 @@ class PageViewController: UIPageViewController {
         
         do {
             if let places = try context.fetch(fetchRequest) as? [Place]{
-                for (i, place) in places.enumerated(){
+                for place in places{
                     if let placeName = place.name{
                         result.append(weatherViewController(withPlace: placeName))
                     }

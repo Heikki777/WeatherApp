@@ -97,22 +97,20 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
             self.showAlert(title: "Virhe", message: "Säädataa ei löydetty sijainnille: \(locality)")
         }
         .finally {
-            self.weatherTableView.reloadData()
-            
-            // Show compass icon only for the GPS location
-            if self.useGPSLocation{
-                self.compassImageView.isHidden =  false
-                self.executeAnimations()
+            DispatchQueue.main.async {
+                self.weatherTableView.reloadData()
+                
+                // Show compass icon only for the GPS location
+                if self.useGPSLocation{
+                    self.compassImageView.isHidden = false
+                    self.executeAnimations()
+                }
             }
         }
     }
     
     func executeAnimations(){
-        
-        DispatchQueue.main.async {
-            self.rotate360degrees(view: self.compassImageView)
-        }
-        
+        self.rotate360degrees(view: self.compassImageView)
     }
     
     func rotate360degrees(view: UIView, duration: Double = 2.0){
