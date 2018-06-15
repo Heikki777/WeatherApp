@@ -16,6 +16,10 @@ class PlaceSearchTableViewController: UITableViewController{
     var searchResults: [String] = [String]()
     var mapView: MKMapView = MKMapView()
     var selectionDelegate: TableViewSelectionDelegate?
+    
+    lazy var searchDelayTimer: Timer = {
+       return Timer()
+    }()
 
     lazy var appDelegate: AppDelegate = {
         return (UIApplication.shared.delegate as! AppDelegate)
@@ -88,30 +92,49 @@ extension PlaceSearchTableViewController: UISearchBarDelegate{
 extension PlaceSearchTableViewController: UISearchResultsUpdating{
     func updateSearchResults(for searchController: UISearchController) {
         
-        self.searchResults.removeAll()
         guard let searchBarText = searchController.searchBar.text else{
+            
+            return
+        }
+        guard searchBarText.count > 2 else{
+            self.searchDelayTimer.invalidate()
             return
         }
         
-        let request = MKLocalSearchRequest()
-        request.naturalLanguageQuery = searchBarText
-        request.region = mapView.region
-        
-        let search = MKLocalSearch(request: request)
-        search.start { (response, error) in
+        self.searchDelayTimer.invalidate()
+        self.searchDelayTimer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: false, block: { (timer) in
             
             self.searchResults.removeAll()
-            guard let response = response else{
-                return
-            }
-            
-            let names = response.mapItems.compactMap{ $0.placemark.locality }
-            for name in names{
-                if !self.searchResults.contains(name) && name.lowercased().contains(searchBarText.lowercased()){
-                    self.searchResults.append(name)
-                }
-            }
             self.tableView.reloadData()
-        }
+            
+            let request = MKLocalSearchRequest()
+            request.naturalLanguageQuery = searchBarText
+            request.region = self.mapView.region
+            
+            let search = MKLocalSearch(request: request)
+            search.start { (response, error) in
+                
+                self.searchResults.removeAll()
+                self.tableView.reloadData()
+                
+                if let error = error{
+                    print(error.localizedDescription)
+                    return
+                }
+                
+                guard let response = response else{
+                    print("No response")
+                    return
+                }
+                
+                let names = response.mapItems.compactMap{ $0.placemark.locality }
+                for name in names{
+                    if !self.searchResults.contains(name) && name.lowercased().contains(searchBarText.lowercased()){
+                        self.searchResults.append(name)
+                    }
+                }
+                self.tableView.reloadData()
+            }
+        })
     }
 }
