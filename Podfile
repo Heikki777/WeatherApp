@@ -1,6 +1,5 @@
 target 'WeatherApp' do
-use_frameworks!
-pod 'SWXMLHash'
-pod 'Alamofire'
-pod 'PromiseKit'
+    pod 'SWXMLHash', '~> 4.7.0'
+    pod 'Alamofire', '~> 4.7'
+    pod 'PromiseKit', '~> 6.0'
 end

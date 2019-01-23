@@ -13,7 +13,7 @@ import Alamofire
 
 struct FMI{
     
-    static let apiKey = YOUR_FMI_API_KEY
+    static let apiKey = "fa4dea19-9d96-461b-94d1-bc5ec33da340"
     
     func loadWeather(forPlace place: String, parameters: [String]) -> Promise<XMLIndexer>{
         return Promise { result in
